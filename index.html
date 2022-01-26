@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>Colour Composer</title>
+
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
+		/>
+		<link rel="stylesheet" href="lib/spectre.min.css" />
+		<link rel="stylesheet" href="lib/spectre-exp.min.css" />
+		<link rel="stylesheet" href="lib\link-awesome\css\line-awesome.min.css" />
+		<link rel="stylesheet" href="lib/monolith.min.css" />
+		<link rel="stylesheet" href="style.css" />
+		<!-- <script src="https://unpkg.com/vue@3.2.29/dist/vue.global.js"></script> -->
+		<!-- <script src="https://unpkg.com/vue@3.2.29/dist/vue.global.prod.js"></script> -->
+		<script src="lib/vue.global.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="container">
+				<div class="navbar toolbar">
+					<div class="navbar-section">
+						<header class="title">
+							<h1><b>Colour</b><span>Composer</span></h1>
+						</header>
+						<nav>
+							<navbar
+								:state="state"
+								:new-colour-set="newColourSet"
+								:save-colour-sets="saveColourSets"
+								:load-colour-sets="loadColourSets"
+								:export-colour-sets="exportColourSets"
+								:clear-all="clearAll"
+							>
+								<template
+									#default="{btnNewSet, btnReset, btnSave, btnLoad, btnExport}"
+								>
+									<div class="new-set-button">
+										<button class="btn new-set" @click="btnNewSet">
+											New set <i class="icon lar la-2x la-plus-square"></i>
+										</button>
+									</div>
+									<button class="btn save-colours" @click="btnSave">
+										Save <i class="icon las la-2x la-cloud-upload-alt"></i>
+									</button>
+									<button class="btn load-colours" @click="btnLoad">
+										Load <i class="icon las la-2x la-cloud-download-alt"></i>
+									</button>
+									<button class="btn load-colours" @click="btnReset">
+										Clear all <i class="icon las la-2x la-times-circle"></i>
+									</button>
+									<button
+										class="btn export-colours"
+										@click="btnExport"
+									>
+										Export <i class="icon las la-2x la-download"></i>
+									</button>
+								</template>
+							</navbar>
+						</nav>
+					</div>
+				</div>
+				<alerts :state="state">
+					<template #default="{btnDismiss, msg, isOpen}">
+						<div class="row alertbar" v-if="isOpen">
+							<button class="btn btn-dismiss" @click="btnDismiss">
+								Dismiss
+							</button>
+							{{ msg }}
+						</div>
+					</template>
+				</alerts>
+				<main class="columns row">
+					<div class="column col-sidebar sidebar">
+						<colour-picker
+							:current-colour="data.currentColour"
+							:update-colour="updateColour"
+						></colour-picker>
+					</div>
+					<div class="column col-main">
+						<div class="columns">
+							<colour-card
+								v-for="colourSet in colourSets"
+								:key="colourSet.id"
+								:colour-set="colourSet"
+								:state="state"
+								:data="data"
+								:add-colour="addColour"
+								:set-current-colour-set="setCurrentColourSet"
+								:delete-current-colour-set="deleteCurrentColourSet"
+								:update-colour-set="updateColourSet"
+							>
+								<template
+									#default="{cancelAction, deleteSet, editTitle, newColour, isActive, classNames}"
+								>
+									<div :class="classNames">
+										<div class="card">
+											<div class="card-header">
+												<div class="card-title h5">
+													<div
+														v-if="! isActive || ! state.isCardSuperModal"
+													>
+														{{colourSet.title}}
+													</div>
+													<div
+														class="card-actions title-edit"
+														v-if="isActive && state.currentAction === 'editTitle'"
+													>
+														<input
+															class="colour-set-title editable-text no-border"
+															:value="colourSet.title"
+															v-focus
+														/>
+														<button
+															class="btn-icon btn-primary"
+															@click="editTitle"
+														>
+															<i class="icon las la-check"></i>Save
+														</button>
+													</div>
+													<div
+														class="card-actions delete-set"
+														v-if="isActive && state.currentAction === 'deleteSet'"
+													>
+														<div>Delete set?</div>
+														<button
+															class="btn-icon btn-primary"
+															@click="deleteSet"
+														>
+															<i class="icon las la-trash-alt"></i>Yes
+														</button>
+														<button
+															class="btn-icon"
+															@click="cancelAction"
+														>
+															<i class="icon"></i>No
+														</button>
+													</div>
+												</div>
+												<!-- /.card-title -->
+
+												<div class="card-menu">
+													<button
+														class="btn-icon"
+														@click="editTitle"
+													>
+														<i class="icon las la-edit"></i>Rename
+													</button>
+													<button
+														class="btn-icon"
+														@click="deleteSet"
+													>
+														<i class="icon las la-trash-alt"></i>Delete
+													</button>
+												</div>
+											</div>
+											<!-- /.card-header -->
+											<div class="card-body">
+												<ul class="colour-list">
+													<colour-item
+														v-for="colour in colourSet.colours"
+														:key="colour.id"
+														:colour="colour"
+														:colour-set="colourSet"
+														:set-current-colour="setCurrentColour"
+														:delete-colour="deleteColour"
+														:state="state"
+														:data="data"
+													>
+													</colour-item>
+													<li class="colour-item add-colour">
+														<button
+															class="btn-transparent"
+															@click="newColour"
+														>
+															<i class="icon las la-2x la-plus"></i>
+														</button>
+													</li>
+												</ul>
+											</div>
+											<!-- /.card-body -->
+										</div>
+										<!-- /.card -->
+									</div>
+									<!-- /.colour-card -->
+								</template>
+							</colour-card>
+						</div>
+					</div>
+				</main>
+				<footer>
+					<small>
+						<b>Colour Composer</b> - a tool for exploring colours and quickly creating beautiful colour sets.<br />
+						Created by Bjørnar Egede-Nissen &copy; 2020. License: <a href="https://github.com/galloppinggryphon/ColourComposer/LICENSE"  target="_blank">MIT</a>.<br />
+
+					</small>
+					<a class="icon-link" href="https://github.com/galloppinggryphon/ColourComposer" target="_blank"
+							><i class="icon lab la-2x la-github"></i>View on Github</a
+						><br />
+				</footer>
+			</div>
+		</div>
+		<script src="lib/pickr.min.js"></script>
+		<script src="contrast-picker.js"></script>
+		<script src="main.js"></script>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+{
+	//https://github.com/microsoft/vscode-eslint/issues/696
+
+
+	"root": true,
+	//"parser": "babel-eslint",
+	"extends": [
+		//"C:\\Users\\Bjornar\\AppData\\Roaming\\npm\\node_modules\\@wordpress\\eslint-plugin"
+		//"@wordpress/eslint-plugin/recommended",
+		//"plugin:jsx-a11y/recommended",
+	],
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"parserOptions": {
+		"sourceType": "script",
+		// "ecmaFeatures": {},
+		"ecmaVersion": 2018
+	},
+	"globals": {
+		"window": true,
+		"document": true,
+		"Vue": true,
+		"getContrastColour": true,
+		"Pickr": true,
+	},
+	//"plugins": ["jsx-a11y"],
+	"settings": {},
+	"rules": {
+		"array-bracket-spacing": ["warn", "always"],
+		"brace-style": ["warn", "stroustrup"],
+		"camelcase": ["warn", { "properties": "never" }],
+		"comma-dangle": ["warn", "always-multiline"],
+		"comma-spacing": "warn",
+		"comma-style": "warn",
+		"computed-property-spacing": ["warn", "always"],
+		"constructor-super": "error",
+		"dot-notation": "error",
+		"eol-last": "error",
+		"eqeqeq": "error",
+		"func-call-spacing": "error",
+		"indent": ["warn", "tab", { "SwitchCase": 1 }],
+		"key-spacing": "warn",
+		"keyword-spacing": "warn",
+		"lines-around-comment": "off",
+		"no-alert": "error",
+		"no-bitwise": "error",
+		"no-caller": "error",
+		"no-console": "off",
+		"no-const-assign": "error",
+		"no-debugger": "error",
+		"no-dupe-args": "error",
+		"no-dupe-class-members": "error",
+		"no-dupe-keys": "error",
+		"no-duplicate-case": "error",
+		"no-duplicate-imports": "error",
+		"no-else-return": "error",
+		"no-eval": "error",
+		"no-extra-semi": "error",
+		"no-fallthrough": "warn",
+		"no-lonely-if": "error",
+		"no-mixed-operators": "error",
+		"no-mixed-spaces-and-tabs": "warn",
+		"no-multiple-empty-lines": ["warn", { "max": 1 }],
+		"no-multi-spaces": "warn",
+		"no-trailing-spaces": "off",
+		"no-multi-str": "off",
+		"no-negated-in-lhs": "error",
+		"no-nested-ternary": "error",
+		"no-redeclare": "error",
+		"no-shadow": "error",
+		"no-undef": "error",
+		"no-undef-init": "error",
+		"no-unreachable": "warn",
+		"no-unsafe-negation": "error",
+		"no-unused-expressions": "warn",
+		"no-unused-vars": "warn",
+		"no-useless-computed-key": "warn",
+		"no-useless-constructor": "warn",
+		"no-useless-return": "warn",
+		"no-var": "warn",
+		"no-whitespace-before-property": "warn",
+		"object-curly-spacing": ["warn", "always"],
+		"padded-blocks": ["off", "never"],
+		"prefer-const": "error",
+		"quote-props": ["warn", "as-needed"],
+		"semi": [
+			"warn",
+			"never"
+		],
+		"semi-spacing": "warn",
+		"space-before-blocks": ["warn", "always"],
+		"space-before-function-paren": ["warn", "never"],
+		"space-in-parens": ["warn", "always"],
+		"space-infix-ops": ["warn", { "int32Hint": false }],
+		"space-unary-ops": [
+			"warn",
+			{
+				"overrides": {
+					"!": true
+				}
+			}
+		],
+		"template-curly-spacing": ["warn", "always"],
+		"valid-typeof": "warn",
+		"yoda": "off"
+	}
+}
