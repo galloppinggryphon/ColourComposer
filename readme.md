@@ -6,6 +6,8 @@ Simple and user friendly utility for composing colour palettes created with Vue 
 
 *This is a preview edition.*
 
+[View ColourComposer demo.](https://galloppinggryphon.github.io/ColourComposer/)
+
 ![colour-composer-screenshot](colour-composer-screenshot.png)
 
 ### Known issues
